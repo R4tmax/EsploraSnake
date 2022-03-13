@@ -1,0 +1,9 @@
+Semestrální práce- Hra na esploøe, Snake.
+
+Aplikace po naètení bude mít jednoduché menu s možnostmi jako hrát, nebo ukázat nejlepší score.
+
+Hra samotná funguje podle stejných pravidel jako historicky známá variace (Napø. z Nokií).
+Na zaèátku zaèínáte s malým hadem, a postupným sbíráním bodù had roste. Hra konèí v momentì,
+Kdy had zakousne sám sebe, eventuelnì nìco jiného, co není bod.
+Na zaèátku si zvolíte obtížnost (Mùže se lišit rychlostí pohybu hada, poèet pøekážek na herní ploše..).
+Po (ne)úspìšném dohrání hry se váš výsledek ukáže, a pokud je dostateènì dobrý, bude uložen v "síni slávy".

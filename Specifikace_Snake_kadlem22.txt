@@ -1,0 +1,70 @@
+Rozšíøení popisu.
+Semestrální práce- Hra na esploøe, Snake.
+
+EDIT 1: Jako reakci na dnešní email a zmìny v nìm nastínìné odesílám lehce rozšíøenou verzi pùvodní pøípravy.
+
+Semestrální práce bude využívat desku Esplora a pøidružené knihovny Esplora.h , TFT.h a EEPROM.h. 
+
+
+Ètyøi tlaèítka budou sloužit jako ovládácí schéma, k jejich využití mùže být použit napøíklad segment kódu ze stránek cvièení (button event - cvièení 4).
+Rùzné obrazovky budou reprezentovány rùznými "stavy".
+
+Pohyby nahoru a dolù mìní pozici v menu, tlaèítko "vlevo" se vrací o menu zpìt, tlaèítko "vpravo" vybere aktuální možnost.
+Ve høe pak tlaèítka odpovídají smìrùm pohybùm hada. 
+
+Program po naètení naète menu s možnostmi: 
+
+	1.New Game
+	2.Scoreboard
+
+1. New game pak branchne na výbìr obtížnosti. Obtížnost se mùže lišit napøíklad následovnì:
+
+	1. Lehká - Rychlost hada bude menší než default (tøeba 0,75) ale bude zmenšený point gain.
+	2. Normální - Baseline, had se hýbe defaultní rychlostí a bodový zisk je 1:1
+	3. Tìžká - Had se hýbe rychleji, ale každý bod víc pøispívá do total score
+	4. Velmi Tìžká - Had se hýbe nejrychelji, body mají nìkolika násobnou hodnotu, ale na mapì jsou pøekážky (nebude možné "projíždìt" okraji hrací plochy...)
+
+-Volba obtížnosti pøipraví hrací plochu a zaène hra.
+
+
+2. Ukáže seznam nejlépe bodujících (podle toho kolik se jich vejde na displej, tøeba top 3/top 5)
+-Top scores budou uloženy pomocí pamìti EEPROM.
+
+	>Hodnoty mohou uložené na pozicích  1-x (tak aby pøímo odpovídali požadované pozici score).
+	Když je budu chtít pøepsat, projdu je cyklem sestupnì a první pozici kde X>Y pøepíšu. Nevím,
+	jako moc velký problém je pøepisování pamìti, ale minimálnì po nìjakém poètu her 
+	by k pøepisu nedocházelo tak èasto. 
+	
+
+	
+Co se týèe hry samotné, pak mám zhruba takovou pøedstavu:
+-Pravidla hry v podstatì odpovídají "typickému" Snakovi
+	>Herní doba není nijak limitovaná, hrací plocha je relativnì malá, a pøirozenì i za optimálního hráèského výkonu døív nebo pozdìji
+	skonèí. Lepšího výsledku pak lze dosáhnout jedinì tak, že se zvedne obtížnost.
+	
+
+-Had se vždycky "spawne" o nìjaké fixné délce zhruba uprostøed obrazovky. Body se budou generovat po jednom v náhodných pozicích X,Y.
+	>Urèitì by šlo po urèité dobì generovat vícero bodù najednou (nebo to mít jako souèást lehèí obtížnosti), 
+	ale myslím si, že náhodnost bodù a urèitá nutnost dostávat se i do 
+	nevýhodných pozic je souèástí obtížnosti hry. 
+	
+	>Místo "céèkové" implementace seedu pro náhodné koordináty bodù (rand,srand..) by zøejmì šlo použít funkci millis.
+	
+
+-Informace o hadu, se kterými se bude primárnì pracovat budou koordináty "hlavy".
+	>Had se musí pohybovat nezávisle na "drženém" tlaèítku, tedy jeden stistk tlaèítka musí zmìnit smìr, a had se tím smìrem bude pohybovat,
+	dokud není øeèeno jinak. Asi by bylo dobré držet smìr pohybu v nìjaké promìnné, a podle toho èekat na input.
+	Tedy: Nechci nijak reagovat na <- když se pohybuji -> (nedává to smysl)
+	      Nechci reagovat na -> když už se pohybuji -> (je to zbyteèné)
+
+	>Koordináty budou vlastnì tvoøit 2d pole, s èímž by mìlo jít dobøe pracovat co se týèe pohybu hada. (pøièítání/odèítání od os X,Y)
+	
+
+-Na konci hry se spoèítají body a ukáží se na obrazovce, pokud budou vyšší, než hodnota nìjakého uloženého Highscore, 
+ pøepíše se jeho hodnota. Stistk (zde libovolného) tlaèítka se vrátí do menu. 
+
+
+
+
+
+
